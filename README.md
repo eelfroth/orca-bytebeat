@@ -8,22 +8,20 @@ proof of concept that [orca-c](https://github.com/hundredrabbits/Orca-c) can be 
 
 ## requirements
 
-- orca-c
+- Orca-c
 - netcat
 - aplay
 - the base36 converter from this repo
 
 ## method
 
-- modify the orca-c source code to set a very high bpm rate:
-[tui_main.c:786](https://github.com/hundredrabbits/Orca-c/blob/master/tui_main.c#L786)
+- compile the base36 converter
 ```
-a->bpm = 30200;
+make
 ```
-- recompile and start orca-c:
+- start Orca-c, specifying a UDP port and some very high bpm:
 ```
-make release
-orca --osc-port 49160 --strict-timing
+orca --osc-port 49160 --strict-timing --bpm 30200
 ```
 - then, in another terminal, run this:
 ```
@@ -34,4 +32,4 @@ now you can send UDP packets from orca with the `;` operator. `netcat` receives 
 
 ## caveats
 
-this method currently does not ensure that orca outputs a steady sample-rate of 2000 Hz. when it goes too slow, it causes a buffer underrun in aplay which is audible as a stutter. when it goes to fast, it introduces latency. the chosen bpm value of 30200 seems to work okay on my computer, with little latency and only the occasional stutter.
+this method currently does not ensure that orca outputs a steady sample-rate of 2000 Hz. when it goes too slow, it causes a buffer underrun in aplay which is audible as a stutter. when it goes to fast, it introduces latency. the chosen bpm value of 30200 seems to work okay on my computer, with not too much latency and only the occasional stutter.

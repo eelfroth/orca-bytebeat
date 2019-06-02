@@ -29,8 +29,9 @@ int main()
         c = c * 255 / 35;
 
         putc((unsigned char) c, stdout);
+        fflush(stdout);
 
-        fprintf(stderr, "\r%ld Hz     \t", (NS_PER_S/dt));
+        fprintf(stderr, "\r%f Hz     \t", (float)NS_PER_S/dt);
     }
     return 0;
 }
